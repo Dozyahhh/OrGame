@@ -1,10 +1,10 @@
 class ControlPanel {
   
   void display() {
-    fill(180);
+    fill(200);
     rect(0, 230, 140, 110);
     
-    fill(70);
+    fill(90);
     rect(0, 340, 140, 60);
     
     fill(100);
@@ -15,6 +15,10 @@ class ControlPanel {
     ellipse(70, 250, 20, 20);
     fill(0, 255, 0);
     ellipse(100, 250, 20, 20);
+    fill(0, 255, 0);
+    ellipse(70, 280, 20, 20);
+    fill(255, 0, 0);
+    ellipse(100, 280, 20, 20);
     
     fill(0, 150, 0);
     rect(120, 240, 10, 60);
