@@ -7,6 +7,7 @@ class Rocket {
 }
 void display() {
   rectMode(CENTER);
+  stroke(3);
   fill(255);
   rect(pos.x, pos.y, 40, 150);
   triangle(pos.x - 20, pos.y - 75, pos.x, pos.y - 110, pos.x + 20, pos.y - 75);
