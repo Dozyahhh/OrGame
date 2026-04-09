@@ -31,7 +31,6 @@ void setup() {
   meteor = new Meteor();
   alien = new Alien();
   bullets = new ArrayList<Bullet>();
-  bullets.add(new Bullet(270, 200));
   
   for (int i = 0; i < stars; i ++) {
     starX[i] = random(width);
@@ -69,6 +68,14 @@ void setup() {
           distance += normalspeed;
           nitro = false;
       }
+      for (int i = bullets.size() - 1; i >=0; i--) {
+        Bullet b = bullets.get(i);
+        b.update();
+        b.display();
+        if (b.pos.y < 0) {
+          bullets.remove(i);
+        }
+      }
       
     textAlign(LEFT);
     fill(255);
@@ -76,6 +83,7 @@ void setup() {
    
     text(distance + " / 25000km" , 25, 30);
     text("Nitro" + nitrofuel, 25, 50);
+    text("Ammo" + ammo, 25, 70);
     
     if (distance >= goal) {
       win = true;
@@ -101,6 +109,17 @@ void setup() {
     boolean moverightbutton = dist(mouseX, mouseY, 100, 280) < 10;
     boolean moveleftbutton = dist(mouseX, mouseY, 100, 250) < 10;
     boolean nitrobutton = dist(mouseX, mouseY, 70, 250) < 10;
+    boolean shootbutton = dist(mouseX, mouseY, 70, 280) < 10;
+    boolean reloadbutton = dist(mouseX, mouseY, 30, 370) <10;
+    
+    if (shootbutton && ammo > 0) {
+      bullets.add(new Bullet(rocket.pos.x - 35, rocket.pos.y - 70));
+      bullets.add(new Bullet(rocket.pos.x + 35, rocket.pos.y - 70));
+      ammo--;
+    }
+    if (reloadbutton) {
+      ammo = maxammo;
+    }
     
     if (moveleftbutton) {
       rocket.pos.x -= movespeed;

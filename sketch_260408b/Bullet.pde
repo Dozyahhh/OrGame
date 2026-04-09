@@ -3,7 +3,7 @@ class Bullet {
   PVector vel;
   Bullet (float startX, float startY) {
     pos = new PVector(startX, startY) ;
-    vel = new PVector(0, -2);
+    vel = new PVector(0, -6);
   }
   void update() {
     pos.add(vel);
