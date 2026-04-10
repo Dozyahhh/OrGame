@@ -69,7 +69,12 @@ void setup() {
           gameover = true;
         }
       }
-        
+        float leftgunhit = dist(meteor.pos.x, meteor.pos.y, rocket.pos.x - 35, rocket.pos.y - 70);
+        float rightgunhit = dist(meteor.pos.x, meteor.pos.y, rocket.pos.x + 35, rocket.pos.y + 70);
+        if ((leftgunhit < 25 || rightgunhit < 25) && !gameover) {
+          gunsbrake = true;
+          meteor.reset();
+        }
     stroke(255);
     for (int i = 0; i < stars; i++) {
       point(starX[i], starY[i]);
@@ -79,12 +84,27 @@ void setup() {
         starX[i] = random(width);
   }
     }
+    
     for(int i = 0; i < bullets.size(); i++) {
       Bullet b = bullets.get(i);
       b.update();
       b.display();
+      float bulletmeteorhit = dist(b.pos.x, b.pos.y, meteor.pos.x, meteor.pos.y);
+      if (bulletmeteorhit < 25) {
+      meteor.reset();
+      bullets.remove(i);
+      continue;
     }
-    
+    float bulletAlienHit = dist(b.pos.x, b.pos.y, alien.pos.x, alien.pos.y);
+    if (bulletAlienHit < 30) {
+      alien.resetPos();
+      bullets.remove(i);
+      continue;
+    }
+    if (b.pos.y < 0) {
+      bullets.remove(i);
+    }
+    }
     if (!win && !gameover) {
         if (nitro && nitrofuel > 0) {
           distance += nitrospeed;
@@ -93,13 +113,6 @@ void setup() {
           distance += normalspeed;
           nitro = false;
       }
-      for (int i = bullets.size() - 1; i >=0; i--) {
-        Bullet b = bullets.get(i);
-        b.update();
-        b.display();
-        if (b.pos.y < 0) {
-          bullets.remove(i);
-        }
       }
       
     textAlign(LEFT);
@@ -129,7 +142,6 @@ void setup() {
       }
     }
     } 
-    }
   void mousePressed() {
     if (gameover) {
       resetgame();
@@ -142,7 +154,7 @@ void setup() {
     boolean shootbutton = dist(mouseX, mouseY, 70, 280) < 10;
     boolean reloadbutton = dist(mouseX, mouseY, 30, 370) <10;
     
-    if (shootbutton && ammo > 0) {
+    if (shootbutton && ammo > 0 && !gameover) {
       bullets.add(new Bullet(rocket.pos.x - 35, rocket.pos.y - 70));
       bullets.add(new Bullet(rocket.pos.x + 35, rocket.pos.y - 70));
       ammo--;
@@ -154,7 +166,7 @@ void setup() {
     if (moveleftbutton) {
       rocket.pos.x -= movespeed;
   }
-  if (moverightbutton) {
+  if (moverightbutton ) {
     rocket.pos.x += movespeed;
   }
   if (nitrobutton && nitrofuel > 0) {
