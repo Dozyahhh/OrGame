@@ -7,9 +7,16 @@ class Rocket {
 }
 void display() {
   rectMode(CENTER);
-  stroke(3);
-  fill(255);
-  rect(pos.x, pos.y, 40, 150);
+   stroke(3);
+   
+  if (hits >= 2) {
+    fill (255, 0, 0); 
+  } else if (shipdamaged) {
+      fill (255, 220, 0);
+    } else {
+      fill(200);
+    }
+    rect(pos.x, pos.y, 40, 150);
   triangle(pos.x - 20, pos.y - 75, pos.x, pos.y - 110, pos.x + 20, pos.y - 75);
   
   fill(255);

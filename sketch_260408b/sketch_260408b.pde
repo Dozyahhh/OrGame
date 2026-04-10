@@ -20,6 +20,7 @@ int ammo = 6;
 int maxammo = 6;
 boolean shipdamaged = false;
 boolean gunsbrake = false;
+int hits = 0;
 boolean nitro = false;
 boolean win = false;
 boolean gameover = false;
@@ -45,6 +46,30 @@ void setup() {
     rocket.display();
     alien.display();
     alien.update();
+    
+    float bodyhit = dist(meteor.pos.x, meteor.pos.y, rocket.pos.x, rocket.pos.y);
+    if (bodyhit < 55 && !gameover) {
+      hits++;
+      meteor.reset();
+      if (hits ==1) {
+        shipdamaged = true;
+        normalspeed = 2;
+      } else if (hits >= 2) {
+          gameover = true;
+        }
+      }
+      float alienhit = dist(alien.pos.x, alien.pos.y, rocket.pos.x, rocket.pos.y);
+      if (alienhit < 55 && !gameover) {
+        hits++;
+        alien.resetPos();
+        if (hits == 1) {
+          shipdamaged = true;
+          normalspeed = 2;
+        } else if (hits >=2) {
+          gameover = true;
+        }
+      }
+        
     stroke(255);
     for (int i = 0; i < stars; i++) {
       point(starX[i], starY[i]);
@@ -106,6 +131,11 @@ void setup() {
     } 
     }
   void mousePressed() {
+    if (gameover) {
+      resetgame();
+      return;
+    }
+    
     boolean moverightbutton = dist(mouseX, mouseY, 100, 280) < 10;
     boolean moveleftbutton = dist(mouseX, mouseY, 100, 250) < 10;
     boolean nitrobutton = dist(mouseX, mouseY, 70, 250) < 10;
@@ -130,8 +160,27 @@ void setup() {
   if (nitrobutton && nitrofuel > 0) {
     nitro = true; }
   rocket.pos.x = constrain(rocket.pos.x, border + 40, width -40);
+  
   }
+
   void mouseReleased() {
     nitro = false;
+  }
+  
+  void resetgame() {
+    distance = 0;
+    win = false;
+    gameover = false;
+    nitro = false;
+    nitrofuel = maxnitro;
+    ammo = maxammo;
+    normalspeed = 5;
+    shipdamaged = false;
+    hits = 0;
+    rocket.pos.x = 270;
+    rocket.pos.y = 270;
+    bullets.clear();
+    meteor.reset();
+    alien = new Alien();
   }
     
