@@ -153,8 +153,9 @@ void setup() {
     boolean nitrobutton = dist(mouseX, mouseY, 70, 250) < 10;
     boolean shootbutton = dist(mouseX, mouseY, 70, 280) < 10;
     boolean reloadbutton = dist(mouseX, mouseY, 30, 370) <10;
+    boolean repairbutton = dist(mouseX, mouseY, 80, 370) <10;
     
-    if (shootbutton && ammo > 0 && !gameover) {
+    if (shootbutton && ammo > 0 && !gameover &&!gunsbrake) {
       bullets.add(new Bullet(rocket.pos.x - 35, rocket.pos.y - 70));
       bullets.add(new Bullet(rocket.pos.x + 35, rocket.pos.y - 70));
       ammo--;
@@ -171,6 +172,10 @@ void setup() {
   }
   if (nitrobutton && nitrofuel > 0) {
     nitro = true; }
+    
+    if (repairbutton) {
+      gunsbrake = false;
+    }
   rocket.pos.x = constrain(rocket.pos.x, border + 40, width -40);
   
   }
