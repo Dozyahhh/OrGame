@@ -121,25 +121,10 @@ void setup() {
    
     text(distance + " / 25000km" , 25, 30);
     text("Nitro" + nitrofuel, 25, 50);
-    text("Ammo" + ammo, 25, 70);
     
     if (distance >= goal) {
       win = true;
-      if (win) {
-        fill (255);
-        textSize(30);
-        textAlign(CENTER);
-        text("MISSION COMPLETE", (border + width) / 2, height / 2);
-        distance = 25000;
-      }
-      if (gameover) {
-        textAlign (LEFT);
-        fill(255, 0, 0);
-        textSize(10);
-        text("SHIP DESTROYED", 10, 140);
-        textSize(15);
-        text("CLICK TO RESTART", 10, 160);
-      }
+
     }
     } 
   void mousePressed() {
